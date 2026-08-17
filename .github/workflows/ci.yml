@@ -24,4 +24,9 @@ jobs:
           npm init -y >/dev/null 2>&1 && npm pkg set scripts.build="echo build-ok"
           npm run build
 
+      - name: Wrote a file last run?
+        run: |
+          test -f /tmp/leftover && echo "LEFTOVER EXISTS" || echo "fresh runner — no leftover"
+          touch /tmp/leftover
+
     
