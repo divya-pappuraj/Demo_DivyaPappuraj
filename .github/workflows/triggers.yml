@@ -40,3 +40,10 @@ jobs:
       - name: repository_dispatch payload
         if: github.event_name == 'repository_dispatch'
         run: echo "client payload = ${{ toJSON(github.event.client_payload) }}"
+        
+        git checkout -b feature/lab02
+echo "trigger-lab" > pr-test.txt
+git add pr-test.txt
+git commit -m "lab02: open a PR"
+git push -u origin feature/lab02
+
