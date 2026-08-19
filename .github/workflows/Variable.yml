@@ -1,4 +1,24 @@
-gh variable set IMAGE_REGISTRY --repo <you>/ci-demo --body ghcr.io
-gh variable set PREFERENCE     --org <your-org> --body org-level --visibility all
-gh variable set PREFERENCE     --repo <you>/ci-demo --body repo-level
-gh variable list --repo <you>/ci-demo
+name: Set GitHub Variables
+on:
+  workflow_dispatch:
+
+jobs:
+  set-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate gh CLI using a token
+        env:
+          # Use GITHUB_TOKEN for repo-level operations; use a PAT secret for org-level changes
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "${GH_TOKEN}" | gh auth login --with-token
+
+      - name: Set variables and list
+        run: |
+          # Replace placeholders: "owner/repo" and "your-org"
+          gh variable set IMAGE_REGISTRY --repo divya-pappuraj/ci-demo --body ghcr.io
+          # Org-level changes typically require a PAT with admin org scope:
+          # echo "${{ secrets.ORG_PAT }}" | gh auth login --with-token
+          gh variable set PREFERENCE --org your-org --body org-level --visibility all
+          gh variable set PREFERENCE --repo divya-pappuraj/ci-demo --body repo-level
+          gh variable list --repo divya-pappuraj/ci-demo
