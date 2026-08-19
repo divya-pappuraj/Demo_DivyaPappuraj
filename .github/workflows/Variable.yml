@@ -1,0 +1,4 @@
+gh variable set IMAGE_REGISTRY --repo <you>/ci-demo --body ghcr.io
+gh variable set PREFERENCE     --org <your-org> --body org-level --visibility all
+gh variable set PREFERENCE     --repo <you>/ci-demo --body repo-level
+gh variable list --repo <you>/ci-demo
